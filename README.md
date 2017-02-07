@@ -1,4 +1,4 @@
-**ansible-aur** is an ansible module to use some aur helpers.
+*ansible-aur* is an ansible module to use some aur helpers.
 
 Currently, we support the following AUR helpers:
 
@@ -7,7 +7,7 @@ Currently, we support the following AUR helpers:
 
 ## Usage
 
-1. Add **ansible-aur** as a submodule in your playbook:
+1. Add as a submodule in your playbook:
 
     mkdir -p library/external_modules
     git submodule add git://github.com/cdown/ansible-aur.git library/external_modules/ansible-aur
@@ -17,6 +17,8 @@ Currently, we support the following AUR helpers:
     ln -s external_modules/ansible-aur/aur library/aur
 
 3. Use it in a task, as in the following examples:
+
+<!-- -->
 
     # Install (using pacaur)
     aur: name=yturl
