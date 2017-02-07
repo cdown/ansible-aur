@@ -9,10 +9,14 @@ Currently, we support the following AUR helpers:
 
 1. Add as a submodule in your playbook:
 
+<!-- -->
+
     mkdir -p library/external_modules
     git submodule add git://github.com/cdown/ansible-aur.git library/external_modules/ansible-aur
 
 2. Link the binary to the base of `library/`:
+
+<!-- -->
 
     ln -s external_modules/ansible-aur/aur library/aur
 
