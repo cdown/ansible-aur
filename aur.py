@@ -4,8 +4,8 @@ from ansible.module_utils.basic import *
 
 
 TOOL_TO_INSTALL_CMD_MAP = {
-    'pacaur': ('pacaur', '--noconfirm', '--noedit', '-S'),
-    'yaourt': ('yaourt', '--noconfirm', '-S'),
+    'pacaur': ['pacaur', '--noconfirm', '--noedit', '-S'],
+    'yaourt': ['yaourt', '--noconfirm', '-S'],
 }
 
 
