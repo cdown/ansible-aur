@@ -33,7 +33,7 @@ def install_packages(module, package_name, tool):
     )
 
 
-def remove_packages(module, package_name, recurse):
+def remove_packages(module, package_name, recurse, nosave):
     if not package_installed(module, package_name):
         module.exit_json(
             changed=False,
@@ -41,6 +41,9 @@ def remove_packages(module, package_name, recurse):
         )
 
     options = '-R'
+
+    if nosave:
+        options += 'n'
 
     if recurse:
         options += 's'
@@ -69,7 +72,11 @@ def main():
                 'choices': ['pacaur', 'yaourt'],
             },
             'recurse': {
-                'default': False,
+                'default': True,
+                'type': 'bool',
+            },
+            'nosave': {
+                'default': True,
                 'type': 'bool',
             },
         },
