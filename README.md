@@ -25,14 +25,19 @@ Currently, we support the following AUR helpers:
 
    ```
    # Install (using pacaur)
-   aur: name=yturl
+   - aur: name=yturl
+     become:yes
+     become_user: some_user_that_has_nopasswd_in_sudoers_for_pacman_u
 
    # Install (using yaourt)
-   aur: name=yturl tool=yaourt
+   - aur: name=yturl tool=yaourt
+     [...]
 
    # Remove (can also be done with the pacman resource)
-   aur: name=yturl state=absent
+   - aur: name=yturl state=absent
+     [...]
 
    # Remove recursively (can also be done with the pacman resource)
-   aur: name=yturl state=absent recurse=true
+   - aur: name=yturl state=absent recurse=true
+     [...]
    ```
