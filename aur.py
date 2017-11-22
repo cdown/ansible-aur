@@ -87,7 +87,8 @@ def main():
     if params['state'] == 'present':
         install_packages(module, params['name'], params['tool'])
     elif params['state'] == 'absent':
-        remove_packages(module, params['name'], params['recurse'])
+        remove_packages(module, params['name'], params['recurse'],
+                        params['nosave'])
 
 
 if __name__ == '__main__':
