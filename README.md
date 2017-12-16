@@ -33,6 +33,10 @@ Currently, we support the following AUR helpers:
    - aur: name=yturl tool=yaourt
      [...]
 
+   # Update (using pacaur)
+   - aur: update=yes auronly=yes
+     [...]
+
    # Remove (can also be done with the pacman resource)
    - aur: name=yturl state=absent
      [...]
