@@ -15,6 +15,18 @@ def package_installed(module, package_name):
     return exit_code == 0
 
 
+def update_packages(module, tool):
+    assert tool in TOOL_TO_INSTALL_CMD_MAP
+
+    cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + ['--update']
+    rc, stdout, stderr = module.run_command(cmd, check_rc=True)
+
+    module.exit_json(
+        changed='there is nothing to do' not in stdout,
+        msg='updated packages',
+    )
+
+
 def install_packages(module, package_name, tool):
     if package_installed(module, package_name):
         module.exit_json(
@@ -61,7 +73,7 @@ def main():
     module = AnsibleModule(
         argument_spec={
             'name': {
-                'required': True,
+                'required': False,
             },
             'state': {
                 'default': 'present',
@@ -79,16 +91,22 @@ def main():
                 'default': True,
                 'type': 'bool',
             },
+            'update': {
+                'default': False,
+                'type': 'bool',
+            },
         },
     )
 
     params = module.params
 
-    if params['state'] == 'present':
-        install_packages(module, params['name'], params['tool'])
-    elif params['state'] == 'absent':
-        remove_packages(module, params['name'], params['recurse'],
-                        params['nosave'])
+    if params['update']:
+        update_packages(module, params['tool'])
+    else:
+        if params['state'] == 'present':
+            install_packages(module, params['name'], params['tool'])
+        elif params['state'] == 'absent':
+            remove_packages(module, params['name'], params['recurse'], params['nosave'])
 
 
 if __name__ == '__main__':
