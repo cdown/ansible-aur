@@ -33,8 +33,8 @@ Currently, we support the following AUR helpers:
    - aur: name=yturl tool=yaourt
      [...]
 
-   # Update (using pacaur)
-   - aur: update=yes
+   # Upgrade (using pacaur)
+   - aur: upgrade=yes
      become:yes
      become_user: some_user_that_has_nopasswd_in_sudoers_for_pacman_u
 
