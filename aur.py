@@ -15,7 +15,7 @@ def package_installed(module, package_name):
     return exit_code == 0
 
 
-def upgrade_packages(module, tool):
+def update_packages(module, tool):
     assert tool in TOOL_TO_INSTALL_CMD_MAP
 
     cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + ['--update']
@@ -23,7 +23,7 @@ def upgrade_packages(module, tool):
 
     module.exit_json(
         changed='there is nothing to do' not in stdout,
-        msg='upgraded packages',
+        msg='updated packages',
     )
 
 
@@ -91,18 +91,18 @@ def main():
                 'default': True,
                 'type': 'bool',
             },
-            'upgrade': {
+            'update': {
                 'default': False,
                 'type': 'bool',
             },
         },
-        required_one_of=[['name', 'upgrade']],
+        required_one_of=[['name', 'update']],
     )
 
     params = module.params
 
-    if params['upgrade']:
-        upgrade_packages(module, params['tool'])
+    if params['update']:
+        update_packages(module, params['tool'])
     else:
         if params['state'] == 'present':
             install_packages(module, params['name'], params['tool'])
