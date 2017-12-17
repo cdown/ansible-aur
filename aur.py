@@ -96,6 +96,7 @@ def main():
                 'type': 'bool',
             },
         },
+        required_one_of=[['name', 'update']],
     )
 
     params = module.params

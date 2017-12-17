@@ -34,7 +34,7 @@ Currently, we support the following AUR helpers:
      [...]
 
    # Update (using pacaur)
-   - aur: update=true
+   - aur: update=yes
      become:yes
      become_user: some_user_that_has_nopasswd_in_sudoers_for_pacman_u
 
