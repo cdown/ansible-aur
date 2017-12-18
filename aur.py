@@ -18,11 +18,11 @@ def package_installed(module, package_name):
 def update_packages(module, tool):
     assert tool in TOOL_TO_INSTALL_CMD_MAP
 
-    cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + ['--update']
+    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['--update']
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
 
     module.exit_json(
-        changed=stdout.count('\n') > 2,
+        changed='there is nothing to do' not in stdout,
         msg='updated packages',
     )
 
