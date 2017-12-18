@@ -22,7 +22,7 @@ def update_packages(module, tool):
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
 
     module.exit_json(
-        changed='there is nothing to do' not in stdout,
+        changed=stdout.count('\n') > 2,
         msg='updated packages',
     )
 
@@ -103,7 +103,7 @@ def main():
 
     if params['update']:
         update_packages(module, params['tool'])
-    else:
+    elif params['name']:
         if params['state'] == 'present':
             install_packages(module, params['name'], params['tool'])
         elif params['state'] == 'absent':
