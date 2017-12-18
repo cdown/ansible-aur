@@ -18,7 +18,7 @@ def package_installed(module, package_name):
 def update_packages(module, tool):
     assert tool in TOOL_TO_INSTALL_CMD_MAP
 
-    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['--update']
+    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['-u', '--aur']
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
 
     module.exit_json(
