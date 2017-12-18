@@ -15,10 +15,12 @@ def package_installed(module, package_name):
     return exit_code == 0
 
 
-def update_packages(module, tool):
+def update_packages(module, tool, auronly):
     assert tool in TOOL_TO_INSTALL_CMD_MAP
 
-    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['-u', '--aur']
+    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['-u']
+    if auronly:
+        cmd = cmd + ['--aur']
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
 
     module.exit_json(
@@ -27,7 +29,7 @@ def update_packages(module, tool):
     )
 
 
-def install_packages(module, package_name, tool):
+def install_packages(module, package_name, tool, auronly):
     if package_installed(module, package_name):
         module.exit_json(
             changed=False,
@@ -37,6 +39,8 @@ def install_packages(module, package_name, tool):
     assert tool in TOOL_TO_INSTALL_CMD_MAP
 
     cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + [package_name]
+    if auronly:
+        cmd = cmd + ['--aur']
     module.run_command(cmd, check_rc=True)
 
     module.exit_json(
@@ -95,6 +99,10 @@ def main():
                 'default': False,
                 'type': 'bool',
             },
+            'auronly': {
+                'default': False,
+                'type': 'bool',
+            },
         },
         required_one_of=[['name', 'update']],
     )
@@ -102,10 +110,10 @@ def main():
     params = module.params
 
     if params['update']:
-        update_packages(module, params['tool'])
+        update_packages(module, params['tool'], params['auronly'])
     elif params['name']:
         if params['state'] == 'present':
-            install_packages(module, params['name'], params['tool'])
+            install_packages(module, params['name'], params['tool'], params['auronly'])
         elif params['state'] == 'absent':
             remove_packages(module, params['name'], params['recurse'], params['nosave'])
 
