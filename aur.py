@@ -20,7 +20,7 @@ def update_packages(module, tool, auronly):
 
     cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['-u']
     if auronly:
-        cmd = cmd + ['--aur']
+        cmd += ['--aur']
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
 
     module.exit_json(
@@ -40,7 +40,7 @@ def install_packages(module, package_name, tool, auronly):
 
     cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + [package_name]
     if auronly:
-        cmd = cmd + ['--aur']
+        cmd += ['--aur']
     module.run_command(cmd, check_rc=True)
 
     module.exit_json(
