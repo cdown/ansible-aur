@@ -4,7 +4,6 @@ Currently, we support the following AUR helpers:
 
 - pacaur (recommended, default)
 - yaourt
-- yay
 
 ## Usage
 
