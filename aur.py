@@ -3,9 +3,9 @@
 from ansible.module_utils.basic import *
 
 
-TOOL_TO_INSTALL_CMD_MAP = {
-    'pacaur': ['pacaur', '--noconfirm', '--noedit', '-S'],
-    'yaourt': ['yaourt', '--noconfirm', '-S'],
+TOOL_CMD_MAP = {
+    'pacaur': ['pacaur', '--noconfirm', '--noedit'],
+    'yaourt': ['yaourt', '--noconfirm'],
 }
 
 
@@ -16,9 +16,9 @@ def package_installed(module, package_name):
 
 
 def update_packages(module, tool, auronly):
-    assert tool in TOOL_TO_INSTALL_CMD_MAP
+    assert tool in TOOL_CMD_MAP
 
-    cmd = ['env', 'LC_ALL=C'] + TOOL_TO_INSTALL_CMD_MAP[tool] + ['-u']
+    cmd = ['env', 'LC_ALL=C'] + TOOL_CMD_MAP[tool] + ['-Su']
     if auronly:
         cmd += ['--aur']
     rc, stdout, stderr = module.run_command(cmd, check_rc=True)
@@ -36,9 +36,9 @@ def install_packages(module, package_name, tool, auronly):
             msg='package already installed',
         )
 
-    assert tool in TOOL_TO_INSTALL_CMD_MAP
+    assert tool in TOOL_CMD_MAP
 
-    cmd = TOOL_TO_INSTALL_CMD_MAP[tool] + [package_name]
+    cmd = TOOL_CMD_MAP[tool] + ['-S', package_name]
     if auronly:
         cmd += ['--aur']
     module.run_command(cmd, check_rc=True)
