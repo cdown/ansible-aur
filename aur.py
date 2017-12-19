@@ -29,7 +29,7 @@ def update_packages(module, tool, auronly):
     )
 
 
-def install_packages(module, package_name, tool, auronly):
+def install_packages(module, package_name, tool, update, auronly):
     if package_installed(module, package_name):
         module.exit_json(
             changed=False,
@@ -38,7 +38,12 @@ def install_packages(module, package_name, tool, auronly):
 
     assert tool in TOOL_CMD_MAP
 
-    cmd = TOOL_CMD_MAP[tool] + ['-S', package_name]
+    options = '-S'
+
+    if update:
+        options += 'u'
+
+    cmd = TOOL_CMD_MAP[tool] + [options, package_name]
     if auronly:
         cmd += ['--aur']
     module.run_command(cmd, check_rc=True)
@@ -109,13 +114,12 @@ def main():
 
     params = module.params
 
-    if params['update']:
+    if params['update'] and not params['name']:
         update_packages(module, params['tool'], params['auronly'])
-    elif params['name']:
-        if params['state'] == 'present':
-            install_packages(module, params['name'], params['tool'], params['auronly'])
-        elif params['state'] == 'absent':
-            remove_packages(module, params['name'], params['recurse'], params['nosave'])
+    elif params['state'] == 'present':
+        install_packages(module, params['name'], params['tool'], params['update'], params['auronly'])
+    elif params['state'] == 'absent':
+        remove_packages(module, params['name'], params['recurse'], params['nosave'])
 
 
 if __name__ == '__main__':
