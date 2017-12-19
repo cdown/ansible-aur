@@ -6,6 +6,7 @@ from ansible.module_utils.basic import *
 TOOL_CMD_MAP = {
     'pacaur': ['pacaur', '--noconfirm', '--noedit'],
     'yaourt': ['yaourt', '--noconfirm'],
+    'yay': ['yay', '--noconfirm'],
 }
 
 
@@ -85,7 +86,7 @@ def main():
             },
             'tool': {
                 'default': 'pacaur',
-                'choices': ['pacaur', 'yaourt'],
+                'choices': ['pacaur', 'yaourt', 'yay'],
             },
             'recurse': {
                 'default': True,
