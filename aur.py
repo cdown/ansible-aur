@@ -100,7 +100,7 @@ def main():
                 'type': 'bool',
             },
             'auronly': {
-                'default': False,
+                'default': True,
                 'type': 'bool',
             },
         },
