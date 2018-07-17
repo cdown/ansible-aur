@@ -4,7 +4,7 @@ from ansible.module_utils.basic import *
 
 
 TOOL_CMD_MAP = {
-    'pacaur': ['pacaur', '--noconfirm', '--noedit'],
+    'pacaur': ['env', 'EDITOR=cat', 'pacaur', '--noconfirm', '--noedit'],
     'yaourt': ['yaourt', '--noconfirm'],
 }
 
